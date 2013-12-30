@@ -27,6 +27,7 @@ require(lib + '/wubwub.js').crawl({
 		'ignore': [],
 
 	},
-	'seed': ['https://news.ycombinator.com/'],
+	'error': function(e) {},
+	'seed': ['https://amazon.com/'],
 	'concurrency': 30,
 });

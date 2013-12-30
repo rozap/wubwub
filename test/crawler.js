@@ -115,8 +115,64 @@ describe('Crawler', function() {
 		it('should return null if none are matched', function() {
 			assert.equal(cr._getCallback('http://someothersite.com', cr.leafRoutes), null);
 		});
-
-
 	})
 
+
+	describe('#shouldFollow()', function() {
+
+		var cr;
+		beforeEach(function() {
+			cr = new crawler.Crawler({
+				'routes': {
+					'leaf': {
+						'.*github.*': 'firstToMatch',
+						'.*google.*': 'secondToMatch'
+					},
+					'tree': {},
+					'ignore': []
+				},
+				'seed': ['https://github.com/']
+			});
+
+		});
+
+		it('should return false for some non-matching link', function() {
+			assert.equal(cr.shouldFollow('http://jaklsfoiw.com', cr.leafRoutes), false);
+			assert.equal(cr.shouldFollow('http://gooooogle.com', cr.leafRoutes), false);
+		});
+
+		it('should return true for matching links', function() {
+			assert.equal(cr.shouldFollow('http://google.com/some/other/page', cr.leafRoutes), true);
+			assert.equal(cr.shouldFollow('http://subdomain.github.com/some/thing', cr.leafRoutes), true);
+		});
+	})
+
+
+	describe('#fetch()', function() {
+		it('should be some links on the stack after fetching a page', function(done) {
+			var cr;
+			var fn = function(tr) {
+				setTimeout(function() {
+					assert.equal(cr.q._data.length > 4, true);
+					done();
+
+				}, 500)
+			}
+
+			cr = new crawler.Crawler({
+				'routes': {
+					'leaf': {
+						'.*': fn
+					},
+					'tree': {
+						'.*': fn
+					},
+					'ignore': []
+				},
+				'seed': []
+			});
+			cr.fetch('http://hiiamchris.com/about')
+		});
+
+	});
 });
