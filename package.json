@@ -1,0 +1,20 @@
+{
+  "name": "wubwub",
+  "version": "0.0.0",
+  "description": "web scraper",
+  "main": "index.js",
+  "keywords": [
+    "scraper"
+  ],
+  "dependencies": {
+    "request": "*",
+    "underscore": "*",
+    "trumpet": "*",
+    "through": "*",
+    "mocha": "*"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "rozap",
+  "license": "BSD-2-Clause"
+}
