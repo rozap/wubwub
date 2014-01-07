@@ -1,8 +1,23 @@
 {
   "name": "wubwub",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "web scraper",
   "main": "index.js",
+
+  "homepage": "https://github.com/rozap/wubwub",
+  "bugs": "https://github.com/rozap/wubwub/issues",
+  "author": {
+    "name": "Chris Duranti",
+    "email": "chrisd1891@gmail.com",
+    "url": "https://github.com/rozap"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rozap/wubwub.git"
+  },
+
+
   "keywords": [
     "scraper"
   ],
