@@ -3,9 +3,10 @@ var assert = require("assert")
 var _ = require('underscore');
 var path = require('path');
 var fs = require('fs');
-var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../');
 
-var crawler = require(lib + '/crawler.js');
+console.log(lib)
+var wubwub = require(lib + '/index.js');
 
 
 describe('Crawler', function() {
@@ -14,7 +15,7 @@ describe('Crawler', function() {
 
 		var cr;
 		beforeEach(function() {
-			cr = new crawler.Crawler({
+			cr = new wubwub.Crawler({
 				'routes': {
 					'leaf': {},
 					'tree': {},
@@ -50,7 +51,7 @@ describe('Crawler', function() {
 
 		var cr;
 		beforeEach(function() {
-			cr = new crawler.Crawler({
+			cr = new wubwub.Crawler({
 				'routes': {
 					'leaf': {},
 					'tree': {},
@@ -93,7 +94,7 @@ describe('Crawler', function() {
 
 		var cr;
 		beforeEach(function() {
-			cr = new crawler.Crawler({
+			cr = new wubwub.Crawler({
 				'routes': {
 					'leaf': {
 						'.*github.*': 'firstToMatch',
@@ -122,7 +123,7 @@ describe('Crawler', function() {
 
 		var cr;
 		beforeEach(function() {
-			cr = new crawler.Crawler({
+			cr = new wubwub.Crawler({
 				'routes': {
 					'leaf': {
 						'.*github.*': 'firstToMatch',
@@ -150,16 +151,18 @@ describe('Crawler', function() {
 
 	describe('#fetch()', function() {
 		it('should be some links on the stack after fetching a page', function(done) {
+
 			var cr;
-			var fn = function(tr) {
+			var fn = function(tr, link) {
 				setTimeout(function() {
 					assert.equal(cr.q._data.length > 4, true);
+
 					done();
 
-				}, 500)
+				}, 1000)
 			}
 
-			cr = new crawler.Crawler({
+			cr = new wubwub.Crawler({
 				'routes': {
 					'leaf': {
 						'.*': fn
@@ -171,8 +174,39 @@ describe('Crawler', function() {
 				},
 				'seed': []
 			});
-			cr.fetch('http://hiiamchris.com/about')
+			//heuehuehueheuh
+			cr.fetch('http://en.wikipedia.org/wiki/Butts')
+			//also this is just a bad idea, but...lazy
+
 		});
 
+		it('should be no links on the stack after fetching a page and with no tree routes specified',
+			function(done) {
+
+				var cr;
+				var fn = function(tr, link) {
+					setTimeout(function() {
+						assert.equal(cr.q._data.length, 0);
+
+						done();
+
+					}, 1000)
+				}
+
+				cr = new wubwub.Crawler({
+					'routes': {
+						'leaf': {
+							'.*': fn
+						},
+						'tree': {
+							'somerandomcharacters2thatshouldnotmatchanything': fn
+						},
+						'ignore': []
+					},
+					'seed': []
+				});
+				//heuehuehueheuh
+				cr.fetch('http://en.wikipedia.org/wiki/Butts')
+			});
 	});
 });
