@@ -15,19 +15,7 @@ wubwub.crawl({
                 'leaf': {
                         '.*en.wikipedia.org/wiki/.*': function(tr, link) {
                                 tr.selectAll('p', function(div) {
-                                        var st = div.createReadStream(),
-                                                data = '';
-
-
-                                        st.on('data', function(chunk) {
-                                                data += chunk;
-                                        })
-                                        st.on('end', function() {
-                                                data = data.replace(/<.*?>/g, '');
-                                                console.log(data);
-
-                                        });
-                                        // div.createReadStream().pipe(process.stdout);
+                                        div.createReadStream().pipe(process.stdout);
                                 });
                         },
                 },
@@ -48,7 +36,7 @@ wubwub.crawl({
 ```
 
 ##wat?
-This example will start at wikipedia.org, and follow *any* link and print the contents of every div on every page to stdout
+This example will start at wikipedia.org, and follow *any* link and print the contents of every p element on every leaf page to stdout
 
 #### Routes
 There are three kinds of routes, leaf routes, tree routes, and ignored routes. 
