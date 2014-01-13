@@ -1,4 +1,6 @@
 var Crawler = require('./lib/crawler');
+var SimpleBackend = require('./lib/simplebackend');
+var RedisBackend = require('./lib/redisbackend');
 
 
 module.exports = (function() {
@@ -12,6 +14,10 @@ module.exports = (function() {
 			crawler.start();
 
 		},
-		Crawler: Crawler.Crawler
+		Crawler: Crawler.Crawler,
+		Backends: {
+			Simple: SimpleBackend.SimpleBackend,
+			Redis: RedisBackend.RedisBackend
+		}
 	}
 })();

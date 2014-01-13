@@ -21,7 +21,8 @@ describe('Crawler', function() {
 					'tree': {},
 					'ignore': []
 				},
-				'seed': ['https://github.com/']
+				'seed': ['https://github.com/'],
+				'backend': new wubwub.Backends.Simple()
 			});
 
 		});
@@ -57,7 +58,9 @@ describe('Crawler', function() {
 					'tree': {},
 					'ignore': []
 				},
-				'seed': ['https://github.com/']
+				'seed': ['https://github.com/'],
+				'backend': new wubwub.Backends.Simple()
+
 			});
 
 		});
@@ -103,7 +106,9 @@ describe('Crawler', function() {
 					'tree': {},
 					'ignore': []
 				},
-				'seed': ['https://github.com/']
+				'seed': ['https://github.com/'],
+				'backend': new wubwub.Backends.Simple()
+
 			});
 
 		});
@@ -132,7 +137,9 @@ describe('Crawler', function() {
 					'tree': {},
 					'ignore': []
 				},
-				'seed': ['https://github.com/']
+				'seed': ['https://github.com/'],
+				'backend': new wubwub.Backends.Simple()
+
 			});
 
 		});
@@ -172,7 +179,9 @@ describe('Crawler', function() {
 					},
 					'ignore': []
 				},
-				'seed': []
+				'seed': [],
+				'backend': new wubwub.Backends.Simple()
+
 			});
 			//heuehuehueheuh
 			cr.fetch('http://en.wikipedia.org/wiki/Butts')
@@ -203,7 +212,9 @@ describe('Crawler', function() {
 						},
 						'ignore': []
 					},
-					'seed': []
+					'seed': [],
+					'backend': new wubwub.Backends.Simple()
+
 				});
 				//heuehuehueheuh
 				cr.fetch('http://en.wikipedia.org/wiki/Butts')
