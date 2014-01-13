@@ -9,35 +9,42 @@ simple web crawler with node. experimenting with streams.
 
 ```javascript
 
-
-var wubwub = require('wubwub')
-
 wubwub.crawl({
-	'routes': {
-		//Routes that get called and crawling does not progress beyond
-		'leaf': {
-			'.*': function(tr, url) {
-				tr.selectAll('div', function(div) {
-					div.createReadStream().pipe(process.stdout);
-				});
-			},
-		},
-		//Routes that get called and all links are enqueued
-		'tree': {
-			'.*': function(tr, url) {
-				tr.selectAll('div', function(div) {
-					div.createReadStream().pipe(process.stdout);
-				});
-			}
-		},
-		//Routes not to follow
-		'ignore': [],
+        'routes': {
+                //Routes that get called and crawling does not progress beyond
+                'leaf': {
+                        '.*en.wikipedia.org/wiki/.*': function(tr, link) {
+                                tr.selectAll('p', function(div) {
+                                        var st = div.createReadStream(),
+                                                data = '';
 
-	},
-	'seed': ['https://wikipedia.org/'],
-	'concurrency': 30,
+
+                                        st.on('data', function(chunk) {
+                                                data += chunk;
+                                        })
+                                        st.on('end', function() {
+                                                data = data.replace(/<.*?>/g, '');
+                                                console.log(data);
+
+                                        });
+                                        // div.createReadStream().pipe(process.stdout);
+                                });
+                        },
+                },
+                //Routes that get called and all links are enqueued
+                'tree': {
+                        '.*en.wikipedia.org/wiki/.*': function(tr, link) {}
+                },
+                //Routes not to follow
+                'ignore': [],
+
+
+
+        },
+        'seed': ['http://en.wikipedia.org/wiki/Earth'],
+        'concurrency': 50,
+        'backend': new wubwub.Backends.Simple()
 });
-
 ```
 
 ##wat?
@@ -60,7 +67,8 @@ Specifies how many requests can be running at the same time
 #### Seed
 Specifies which URL to start crawling at
 
-
+#### Backend
+Controls how links are enqueued for crawling. Two are included, wubwub.Backends.Simple() and wubwub.Backends.Redis() which implement put() and get(onLink) methods for links, and keep track of what URLs have already been seen. You can implement your own backend as long as it implements those methods. get() is async and takes a callback to be executed once the link is fetched. 
 
 
 
