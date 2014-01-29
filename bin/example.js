@@ -29,7 +29,7 @@ wubwub.crawl({
 		},
 		//Routes that get called and all links are enqueued
 		'tree': {
-			'.*en.wikipedia.org/wiki/.*': function(tr, link) {}
+			'.*en.wikipedia': function(tr, link) {}
 		},
 		//Routes not to follow
 		'ignore': [],
